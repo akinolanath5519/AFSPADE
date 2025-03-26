@@ -1,6 +1,8 @@
 {
   "name": "afspade-frontend",
   "version": "0.1.0",
+  "main": "index.js",
+  "homepage": "/",
   "private": true,
   "dependencies": {
     "@heroicons/react": "^2.2.0",
