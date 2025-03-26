@@ -1,12 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import API_URL from '../config/api';
+
+
 
 // Async thunk for creating a course
 export const createCourse = createAsyncThunk(
   'course/createCourse',
   async (courseData, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post('http://localhost:5000/course', courseData, {
+      const { data } = await axios.post(`${API_URL}/course`, courseData, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`, // Example for token-based auth
         },
@@ -28,7 +31,7 @@ export const enrollInCourse = createAsyncThunk(
     try {
       const token = getState().auth.token; // Get token from Redux store
       const { data } = await axios.post(
-        `http://localhost:5000/select/course/${courseId}`,
+        `${API_URL}/select/course/${courseId}`,
         {},
         {
           headers: {
@@ -51,7 +54,7 @@ export const fetchAllCourses = createAsyncThunk(
     async (_, { rejectWithValue, getState }) => {
       try {
         const token = getState().auth.token; // Get token from Redux store
-        const { data } = await axios.get('http://localhost:5000/course', {
+        const { data } = await axios.get(`${API_URL}/course`, {
           headers: {
             'Authorization': `Bearer ${token}`,  // Pass the token here
           },
@@ -64,6 +67,8 @@ export const fetchAllCourses = createAsyncThunk(
     }
   );
   
+
+ 
 
   //fetch all course for students
   export const fetchAllCoursesForStudent = createAsyncThunk(
@@ -71,7 +76,7 @@ export const fetchAllCourses = createAsyncThunk(
     async (_, { rejectWithValue, getState }) => {
       try {
         const token = getState().auth.token; // Get token from Redux store
-        const { data } = await axios.get('http://localhost:5000/student/course', {
+        const { data } = await axios.get(`${API_URL}/student/course`, {
           headers: {
             'Authorization': `Bearer ${token}`,  // Pass the token here
           },
@@ -85,12 +90,13 @@ export const fetchAllCourses = createAsyncThunk(
   );
   
 
+   
 // Async thunk for fetching a single course by ID
 export const fetchCourseById = createAsyncThunk(
   'course/fetchCourseById',
   async (id, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`http://localhost:3001/courses/${id}`);
+      const { data } = await axios.get(`${API_URL}/courses/${id}`);
       return data.course; // Return the course data
     } catch (error) {
       console.error("Error fetching course by ID:", error.response?.data?.message || error.message);
@@ -99,12 +105,13 @@ export const fetchCourseById = createAsyncThunk(
   }
 );
 
+
 // Async thunk for deleting a course
 export const deleteCourse = createAsyncThunk(
   'course/deleteCourse',
   async (courseId, { rejectWithValue }) => {
     try {
-      const { data } = await axios.delete(`http://localhost:3001/courses/${courseId}`);
+      const { data } = await axios.delete(`${API_URL}/courses/${courseId}`);
       return courseId; // Return the deleted course ID
     } catch (error) {
       console.error("Error deleting course:", error.response?.data?.message || error.message);
