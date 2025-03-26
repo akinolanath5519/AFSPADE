@@ -1,0 +1,9 @@
+services:
+  - type: static
+    name: afspade-frontend
+    repo: https://github.com/akinolanath5519/AFSPADE-Frontend
+    buildCommand: npm install && npm run build
+    publishDirectory: build
+    envVars:
+      - key: NODE_VERSION
+        value: 18
